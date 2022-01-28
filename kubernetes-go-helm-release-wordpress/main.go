@@ -15,7 +15,7 @@ func main() {
 
 			Version: pulumi.String("13.0.6"),
 			Chart:   pulumi.String("wordpress"),
-			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("ClusterIP")}},
+			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("ClusterIP ")}},
 			RepositoryOpts: &helm.RepositoryOptsArgs{
 				Repo: pulumi.String("https://charts.bitnami.com/bitnami"),
 			},
@@ -35,21 +35,11 @@ func main() {
 
 
 		})
-ctx.Export("frontend_ip", svc)
+		ctx.Export("frontend_ip", svc)
 
 		if err != nil {
 			return err
 		}
-
-
-
-		// Export the public IP for WordPress.
-		//
-		//frontendIP := wordpress.GetProvider("v1/Service", "wpdev-wordpress", "default").ApplyT(func(r interface{}) (pulumi.StringPtrOutput, error) {
-		//	svc := r.(*corev1.Service)
-		//	return svc.Status.LoadBalancer().Ingress().Index(pulumi.Int(0)).Ip(), nil
-		//})
-		//ctx.Export("frontendIp", frontendIP)
 
 		return nil
 	})
