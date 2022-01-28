@@ -2,7 +2,7 @@
 
 # Wordpress Helm Chart
 
-Uses the Helm API of `pulumi-kubernetes` to deploy `v9.6.0` of the Wordpress Helm Chart to a
+Uses the Helm Release API of `pulumi-kubernetes` to deploy `v13.0.6` of the Wordpress Helm Chart to a
 Kubernetes cluster. Pulumi will expand the Helm Chart and submit the expanded YAML to the cluster.
 
 ## Running the App
