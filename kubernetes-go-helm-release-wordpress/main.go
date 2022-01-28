@@ -15,7 +15,7 @@ func main() {
 
 			Version: pulumi.String("13.0.6"),
 			Chart:   pulumi.String("wordpress"),
-			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("ClusterIP ")}},
+			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("NodePort")}},
 			RepositoryOpts: &helm.RepositoryOptsArgs{
 				Repo: pulumi.String("https://charts.bitnami.com/bitnami"),
 			},

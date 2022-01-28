@@ -33,50 +33,35 @@ Previewing update (wordpress-dev)
 
 View Live: https://app.pulumi.com/...
 
-     Type                                            Name                                        Plan       
- +   pulumi:pulumi:Stack                             kubernetes-go-helm-wordpress-wordpress-dev  create     
- +   └─ kubernetes:helm.sh/v2:Chart                  wpdev                                       create     
- +      ├─ kubernetes:core/v1:PersistentVolumeClaim  wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:Secret                 wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:Service                wpdev-wordpress                             create     
- +      ├─ kubernetes:core/v1:ConfigMap              default/wpdev-mariadb                       create     
- +      ├─ kubernetes:core/v1:Secret                 default/wpdev-mariadb                       create     
- +      ├─ kubernetes:core/v1:Pod                    wpdev-credentials-test                      create     
- +      ├─ kubernetes:core/v1:Service                default/wpdev-mariadb                       create     
- +      ├─ kubernetes:apps/v1:Deployment             wpdev-wordpress                             create     
- +      └─ kubernetes:apps/v1:StatefulSet            default/wpdev-mariadb                       create     
+     Type                              Name                                                 Plan
+ +   pulumi:pulumi:Stack               kubernetes-go-helm-release-wordpress-wordpress-dev   create
+ +   └─ kubernetes:helm.sh/v3:Release  wpdev                                                create
  
 Resources:
-    + 11 to create
+    + 2 to create
 
 Do you want to perform this update? yes
 Updating (wordpress-dev)
 
 View Live: https://app.pulumi.com/.../updates/7
 
-     Type                                         Name                                        Status
- +   pulumi:pulumi:Stack                          kubernetes-go-helm-wordpress-wordpress-dev  created
- +   └─ kubernetes:helm.sh:Chart                  wpdev                                       created
- +      ├─ kubernetes:core:Secret                 default/wpdev-mariadb                       created
- +      ├─ kubernetes:core:Secret                 wpdev-wordpress                             created
- +      ├─ kubernetes:core:PersistentVolumeClaim  wpdev-wordpress                             created
- +      ├─ kubernetes:core:Service                wpdev-wordpress                             created
- +      ├─ kubernetes:core:ConfigMap              default/wpdev-mariadb                       created
- +      ├─ kubernetes:core:Service                default/wpdev-mariadb                       created
- +      ├─ kubernetes:apps:StatefulSet            default/wpdev-mariadb                       created
- +      └─ kubernetes:apps:Deployment             wpdev-wordpress                             created
+     Type                              Name                                                 Status
+ +   pulumi:pulumi:Stack               kubernetes-go-helm-release-wordpress-wordpress-dev   created
+ +   ├─ kubernetes:helm.sh/v3:Release  wpdev                                                created
+     └─ kubernetes:core/v1:Service     svc
 
 Outputs:
-    frontendIp: "35.193.210.254"
+    frontend_ip: "10.96.85.225"
 
 Resources:
-    + 10 created
+    + 2 created
 
-Duration: 53s
+Duration: 1m4s
+
 ```
 
 We can see here in the `---outputs:---` section that Wordpress was allocated a public IP, in this
-case `35.193.210.254`. It is exported with a stack output variable, `frontendIp`. We can use `curl`
+case `10.96.85.225`. It is exported with a stack output variable, `frontendIp`. We can use `curl`
 and `grep` to retrieve the `<title>` of the site the proxy points at.
 
 ```sh
