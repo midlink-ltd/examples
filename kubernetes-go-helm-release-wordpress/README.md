@@ -43,15 +43,15 @@ Resources:
 Do you want to perform this update? yes
 Updating (wordpress-dev)
 
-View Live: https://app.pulumi.com/.../updates/7
+View Live: https://app.pulumi.com/...
 
      Type                              Name                                                 Status
  +   pulumi:pulumi:Stack               kubernetes-go-helm-release-wordpress-wordpress-dev   created
  +   ├─ kubernetes:helm.sh/v3:Release  wpdev                                                created
-     └─ kubernetes:core/v1:Service     svc
+     └─ kubernetes:core/v1:Service     frontendIp
 
 Outputs:
-    frontend_ip: "10.96.85.225"
+    frontendIp: "10.96.85.225"
 
 Resources:
     + 2 created
@@ -77,25 +77,17 @@ When you're done, you can remove these resources with `pulumi destroy`:
 pulumi destroy --skip-preview
 Destroying (wordpress-dev)
 
-View Live: https://app.pulumi.com/example/.../updates/8
+View Live: https://app.pulumi.com/example/...
 
-     Type                                         Name                                        Status
- -   pulumi:pulumi:Stack                          kubernetes-go-helm-wordpress-wordpress-dev  deleted
- -   └─ kubernetes:helm.sh:Chart                  wpdev                                       deleted
- -      ├─ kubernetes:core:Secret                 wpdev-wordpress                             deleted
- -      ├─ kubernetes:core:Secret                 default/wpdev-mariadb                       deleted
- -      ├─ kubernetes:core:ConfigMap              default/wpdev-mariadb                       deleted
- -      ├─ kubernetes:core:Service                default/wpdev-mariadb                       deleted
- -      ├─ kubernetes:core:PersistentVolumeClaim  wpdev-wordpress                             deleted
- -      ├─ kubernetes:core:Service                wpdev-wordpress                             deleted
- -      ├─ kubernetes:apps:StatefulSet            default/wpdev-mariadb                       deleted
- -      └─ kubernetes:apps:Deployment             wpdev-wordpress                             deleted
+     Type                              Name                                                 Status
+ -   pulumi:pulumi:Stack               kubernetes-go-helm-release-wordpress-wordpress-dev   deleted
+ -   └─ kubernetes:helm.sh/v3:Release  wpdev                                                deleted
 
 Outputs:
-  - frontendIp: "35.193.210.254"
+  - frontendIp: "10.96.85.225""
 
 Resources:
-    - 10 deleted
+    - 2 deleted
 
-Duration: 7s
+Duration: 9s
 ```

@@ -12,16 +12,15 @@ func main() {
 		// Deploy the bitnami/wordpress chart.
 
 		wordpress, err := helm.NewRelease(ctx, "wpdev", &helm.ReleaseArgs{
-
 			Version: pulumi.String("13.0.6"),
 			Chart:   pulumi.String("wordpress"),
-			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("NodePort")}},
+			Values:    pulumi.Map{"service": pulumi.StringMap{"type": pulumi.String("ClusterIP")}},
 			RepositoryOpts: &helm.RepositoryOptsArgs{
 				Repo: pulumi.String("https://charts.bitnami.com/bitnami"),
 			},
 		})
 
-		svc := pulumi.All(wordpress.Status.Namespace(), wordpress.Status.Name()).ApplyT(func(r interface{})(interface{}, error){
+		frontendIp := pulumi.All(wordpress.Status.Namespace(), wordpress.Status.Name()).ApplyT(func(r interface{})(interface{}, error){
 
 			arr := r.([]interface{})
 			namespace := arr[0].(*string)
@@ -32,10 +31,8 @@ func main() {
 			}
 			return svc.Spec.ClusterIP(), nil
 
-
-
 		})
-		ctx.Export("frontend_ip", svc)
+		ctx.Export("frontendIp", frontendIp)
 
 		if err != nil {
 			return err
