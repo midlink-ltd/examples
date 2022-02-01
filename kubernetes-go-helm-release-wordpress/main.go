@@ -20,7 +20,7 @@ func main() {
 			},
 		})
 
-		frontendIp := pulumi.All(wordpress.Status.Namespace(), wordpress.Status.Name()).ApplyT(func(r interface{})(interface{}, error){
+		service := pulumi.All(wordpress.Status.Namespace(), wordpress.Status.Name()).ApplyT(func(r interface{})(interface{}, error){
 
 			arr := r.([]interface{})
 			namespace := arr[0].(*string)
@@ -29,10 +29,20 @@ func main() {
 			if err != nil {
 				return "", nil
 			}
-			return svc.Spec.ClusterIP(), nil
+
+			retval := []pulumi.StringPtrOutput {
+				svc.Metadata.Name(),
+				svc.Spec.ClusterIP(),
+
+			}
+
+			return retval, nil
+
 
 		})
-		ctx.Export("frontendIp", frontendIp)
+
+		//myservice := service.(*corev1.Service)
+		ctx.Export("frontendIp", service)
 
 		if err != nil {
 			return err
